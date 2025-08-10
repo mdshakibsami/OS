@@ -8,7 +8,7 @@ int main()
     int n;
     cin >> n;
 
-    vector<string> process(n);
+    vector<string> process(n), gantt;
     vector<int> arrivalTime(n), burstTime(n), priority(n), CT(n), TAT(n), WT(n);
     vector<bool> done(n, false);
 
@@ -47,9 +47,11 @@ int main()
         {
             // CPU idle
             currentTime++;
+            gantt.push_back("idle");
             continue;
         }
 
+        gantt.push_back(process[index]);
         currentTime += burstTime[index];
         CT[index] = currentTime;
         TAT[index] = CT[index] - arrivalTime[index];
@@ -57,6 +59,12 @@ int main()
         done[index] = true;
         completed++;
     }
+
+    for (auto x : gantt)
+        cout << x << " => ";
+    cout << "end"<<endl;
+
+
     cout << "Process\tArrival\tBurst\tPriority\tCompletion\tTurnAround\tWaiting\n";
     for (int i = 0; i < n; i++)
     {
